@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>writeup on MAREK.GELETA</title>
+    <link>https://geleta.eu/tags/writeup/</link>
+    <description>Recent content in writeup on MAREK.GELETA</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 11 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://geleta.eu/tags/writeup/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My First SSRF Using DNS Rebinding</title>
+      <link>https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/</link>
+      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/</guid>
+      <description>What is DNS Rebinding? Imagine you are a comuter :D People give you URLs and you load them
+Of course you won&amp;rsquo;t load url that points to your internal network&amp;hellip; That would be stupid right?
+Because of this some clever developer wrote code like this to prevent it from happening
+To make explaining this easier
+ ip_banlist is list of IPs you are blocking
+ domain is the URL you are trying to fetch</description>
+    </item>
+    
+  </channel>
+</rss>

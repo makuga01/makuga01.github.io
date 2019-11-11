@@ -1,34 +1,62 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>geleta.eu on geleta.eu</title>
-    <link>/</link>
-    <description>Recent content in geleta.eu on geleta.eu</description>
+    <title>MAREK.GELETA on MAREK.GELETA</title>
+    <link>https://geleta.eu/</link>
+    <description>Recent content in MAREK.GELETA on MAREK.GELETA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <atom:link href="/" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://geleta.eu/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Posts</title>
+      <link>https://geleta.eu/posts/</link>
+      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://geleta.eu/posts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>whoami</title>
+      <link>https://geleta.eu/whoami/</link>
+      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://geleta.eu/whoami/</guid>
       <description>
 
-&lt;h1 id=&#34;whoami&#34;&gt;&amp;gt;whoami&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;👶🏻 16yo High School Student&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;👾 Trying to become BugHunter&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;16yo high school student&lt;/li&gt;
-&lt;li&gt;Interested in cybersecurity, programming, 💤&lt;/li&gt;
-&lt;li&gt;wannabe H4xx0R&lt;/li&gt;
-&lt;li&gt;❤️ CTFs ❤️&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hackerone.com/gel0&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;h1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://bugcrowd.com/gel0&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;bugcrowd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&#34;contact&#34;&gt;Contact&lt;/h1&gt;
+&lt;h2 id=&#34;interests&#34;&gt;Interests&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Email : &lt;code&gt;python3 -c &amp;quot;import zlib; print(zlib.decompress(b&#39;x\x9c3\xa80K1347235Kr((\xca/\xc9\xcf\xcbM\xcc\xcc\xd1K\xce\xcf\x05\x00r\xc9\t\x08&#39;).decode())&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://keybase.io/gel0/pgp_keys.asc?fingerprint=720e41375fa066e0ee6953bf2bea0f7fa6e5c82b&#34;&gt;PGP 🔑&lt;a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;🦟Bug Hunting&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;❤️CTFs&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;🐍 Python programming&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;contact&#34;&gt;Contact&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;💌Email:      &lt;code&gt;LVstLS0tLT4rPF0+LS0tLlstLT4rKysrKzxdPi5bKys+LS0tPF0+KysuLS0tLVstPisrPF0+LlstLT4rPF0+KysrKy4tLS0tLS4rKysrKysuLS0tLS0uKysrKy4tLisuLS0tLS1bLT4rKzxdPi4tLVstLS0+Kys8XT4uWysrKys+LS0tPF0+LisrLi0tLS4rKysrKy4tLS0tLS4tLi0uLS0tLS0tLS0tLS0tLisrKysrKysrLisrKy5bLS0+KzxdPi0tLS0tLS0tLi0tWy0tLT4rPF0+LS4rKysrKysrKysrKysuLS0u&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://sk.wikipedia.org/wiki/Brainfuck&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Hint 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://lmgtfy.com/?q=base64+decode&amp;amp;s=g&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Hint 2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;🔑&lt;a href=&#34;https://keybase.io/gel0/pgp_keys.asc?fingerprint=720e41375fa066e0ee6953bf2bea0f7fa6e5c82b&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;PGP Key&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

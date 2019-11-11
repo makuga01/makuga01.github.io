@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  
+  
+  
+  
+  
+  
+  
+  <link rel="canonical" href="https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           My First SSRF Using DNS Rebinding | MAREK.GELETA
+       
+  </title>
+  <meta name="title" content="My First SSRF Using DNS Rebinding | MAREK.GELETA">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="My First SSRF Using DNS Rebinding"/>
+<meta name="twitter:description" content="What is DNS Rebinding? Imagine you are a comuter :D People give you URLs and you load them
+Of course you won&rsquo;t load url that points to your internal network&hellip; That would be stupid right?
+Because of this some clever developer wrote code like this to prevent it from happening
+To make explaining this easier
+ ip_banlist is list of IPs you are blocking
+ domain is the URL you are trying to fetch"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "My First SSRF Using DNS Rebinding",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/geleta.eu\/2019\/my-first-ssrf-using-dns-rebinfing\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/geleta.eu\/me\/avatar.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "bugbounty, ssrf, writeup, security, bug, bounty, dns rebinding, dns, rebinding, attack",
+  "wordcount":  1493 ,
+  "url": "https:\/\/geleta.eu\/2019\/my-first-ssrf-using-dns-rebinfing\/",
+  "datePublished": "2019-11-11T00:00:00\x2b00:00",
+  "dateModified": "2019-11-11T00:00:00\x2b00:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Marek Geleta1",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/geleta.eu\/me\/avatar.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Marek Geleta"
+  },
+  "description": ""
+}
+</script>
+</head>
+
+  
+
+
+  <body class="dark-theme" penis>
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://geleta.eu">MAREK.GELETA</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/whoami" title="">whoami</a>
+                
+                <a class="menu-item" href="/posts/" title="">blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">categories</a>
+                
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/whoami" title="">whoami</a>
+                
+                <a class="menu-item" href="/posts/" title="">blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">categories</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">My First SSRF Using DNS Rebinding</h1>
+        <div class="post-meta">
+            Written by <a href="https://geleta.eu" rel="author">Marek Geleta</a> with ♥ 
+                <span class="post-time">
+                    on <time datetime=2019-11-11 >11 November 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://geleta.eu/categories/bug-bounty/"> Bug Bounty </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                8 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<h1 id="what-is-dns-rebinding">What is DNS Rebinding?</h1>
+
+<p>Imagine you are a comuter :D
+People give you URLs and you load them</p>
+
+<p>Of course you won&rsquo;t load url that points to your internal network&hellip; That would be stupid right?</p>
+
+<p>Because of this some clever developer wrote code like this to prevent it from happening</p>
+
+<p>To make explaining this easier</p>
+
+<ul>
+<li><p><code>ip_banlist</code> is list of IPs you are blocking</p></li>
+
+<li><p><code>domain</code> is the URL you are trying to fetch</p></li>
+
+<li><p><code>getHostname</code> is a function that resolves a domain/URL to actual IP address or translates it from eg. octal to IPV4/6</p>
+
+<pre><code>import requests
+from core_funcs import getHostname
+from banlists import ip_banlist
+
+def secureFetch(domain):
+  if getHostname(domain) not in ip_banlist:
+    r = requests.get(domain)
+    return r.text
+</code></pre></li>
+</ul>
+
+<blockquote>
+<p>&ldquo;You can&rsquo;t just bypass this&rdquo;</p>
+
+<p>&mdash; <cite>a not so clever Developer</cite></p>
+</blockquote>
+
+<h2 id="turns-out-i-actually-can">Turns out I actually can!</h2>
+
+<p>And that&rsquo;s what DNS Rebinding is about!</p>
+
+<h3 id="let-s-go-through-the-function-line-by-line">Let&rsquo;s go through the function line by line</h3>
+
+<ul>
+<li>Let&rsquo;s say the function is ran with <code>domain='http://wtf.geleta.eu'</code> and that the <code>ip_banlist = ['169.254.169.254', '127.0.0.1']</code></li>
+<li>First it runs a DNS query with wtf.geleta.eu which returns 12.34.56.78 which is not in <code>ip_banlist</code> so our journey continues!!!</li>
+<li>In the meantime the DNS record for wtf.geleta.eu magically changes to 127.0.0.1 🦹🏻‍</li>
+<li>now the request is made to <code>http://wtf.geleta.eu</code> so again somewhere in the <code>requests.get()</code> the dns query is ran again and now with DNS record changed to 127.0.0.1 Soooo there&rsquo;s nothing stopping us from retrieving localhost 🎉🎉🎉</li>
+</ul>
+
+<p>So that&rsquo;s the theory behind this whole thing. Pretty primitive right?</p>
+
+<h2 id="what-do-we-actually-need-to-make-this-happen">What do we actually need to make this happen</h2>
+
+<ul>
+<li>Since we can&rsquo;t manually change the dns record in milliseconds as the program runs, we need a custom DNS server configured to somehow figure out what IP should it resolve to and set TTL to 0 so no caching happens on the backend</li>
+<li>Some &ldquo;interface&rdquo; to configure the domain - what should it resolve to, how many times, stuff like this</li>
+<li>A fair bit of luck obviously</li>
+</ul>
+
+<p>When I found this bug I used <a href="https://lock.cmpxchg8b.com/rebinder.html" rel="nofollow noreferrer" target="_blank">https://lock.cmpxchg8b.com/rebinder.html</a> but later on I figured out that it&rsquo;s not ideal, it only takes 2 IPs and resolves between them randomly so I have to send like 100 requests to get 1 that actually went to localhost :D</p>
+
+<p>(This was about 7-8 months ago, I made my own tool for this. So expect little product placement at the end of the post!)</p>
+
+<h1 id="how-it-went-down-with-the-actual-vulnerability">How it went down with the actual vulnerability</h1>
+
+<p>I stumbled upon a service that I can configure to make a json request, set headers, etc. Then it gives me the http response</p>
+
+<p>When i set the url to some internal/banned ip like <code>127.0.0.1</code> it gave me something like: <code>The request was blocked</code></p>
+
+<p>After few hours of trying to bypass it I was like &ldquo;This is unbreakable, I&rsquo;m gonna get some food&rdquo;</p>
+
+<p>Then I got some food and minute after that I remembered that my friend <a href="https://masarik.sh" rel="nofollow noreferrer" target="_blank">Jan Masarik</a> did one challenge when we were hacking Fireshell CTF 2019 ctf with our <a href="https://ctftime.org/team/53880" rel="nofollow noreferrer" target="_blank">CTF team</a> The challenge was about dns rebinding. Writeup: <a href="https://ctftime.org/writeup/13005" rel="nofollow noreferrer" target="_blank">https://ctftime.org/writeup/13005</a>
+So I used the technique from writeup. I set the rebinding to 127.0.0.1/google ip and after sending 100 request with burp intruder 2 of them came back with different lenght than others, I click on one of them and see a html code with title which was name of the company</p>
+
+<p>And I was like</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://media1.tenor.com/images/1d44cb3dd69e88406e6e25bd70bbe9d6/tenor.gif" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>NO WAY!!!!! IT ACTUALLY FUCKING WORKED WTFFFFFF I&rsquo;M A 1337 HAXXXXXOR NOW</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_1/actually_ssrf.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>With dns rebinding confirmed, I didn&rsquo;t actually know what to do&hellip; Everything I have ever hacked before were just ctfs - and this is where the challenge usually ends, you have the flag and your are good to go</p>
+
+<h2 id="it-doesn-t-work-that-well-irl">It doesn&rsquo;t work that well IRL</h2>
+
+<p>Now all I had was some ssrf that I didn&rsquo;t know what I can use it for.</p>
+
+<p>Few hours went by and there I was sending keybase message to <a href="https://masarik.sh" rel="nofollow noreferrer" target="_blank">Jan Masarik</a> because I was stuck again.
+I told him that it was an amazon instance and he sent me some ip adress - 169.254.169.254 I clicked on it and nothing happened, that IP didn&rsquo;t exist
+Then he told me that it is the aws metadata IP and if I can retrieve data from there, I basically own their whole aws (It wasn&rsquo;t completely true as you find out in a while but I was really really excited) I immediately fired up intruder and in few seconds I recieved a response with aws keys</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_1/aws_keys.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>Now again I was like</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://media1.tenor.com/images/6ebe33a366743280f76d14944244e82b/tenor.gif" alt="I love Pingu btw" class="lazyload"><figcaption class="image-caption">I love Pingu btw</figcaption></figure></p>
+
+<p>And I love the ssrfs too!</p>
+
+<h2 id="back-into-reality">Back Into reality</h2>
+
+<p>Those were some trashy keys, I couldn&rsquo;t do almost anything with them&hellip;</p>
+
+<p>Turns out I can only r/w some buckets but there weren&rsquo;t any useful, those that were hosted on frontend weren&rsquo;t writable (my favorite was the one with cookbooks - see screenshot) It made me laugh but I was disappointed. I tried to escalate my privs for another few hours and-or figure out what else could I do but there wasn&rsquo;t much of it :(</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_1/buckets.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>Ok so the vuln had <em>some</em> Impact so I could report it. I set severity to P2
+Now all left to do was enumerate and possibly get a RCE if I was lucky</p>
+
+<h2 id="fast-forward-a-week">Fast forward a week</h2>
+
+<p>I didn&rsquo;t have any response from the company,no fix, no lawsuit, nothing at all. Perhaps I should report it as P1. But whatever! It was good for me, I could enumerate more.</p>
+
+<h3 id="aaaand-after-chaining-with-other-ssrf">AAAAND After chaining with other ssrf&hellip;</h3>
+
+<p>This was a bit easier - there was a ftp connection with ssrf in it - I put 127.0.0.1:22 into ip adress field and server responded with <code>bad response: SSH-2.0-OpenSSH_someversion :D</code>
+I tried to bruteforce ftp creds with top-1k passwords and uname of root but I guess they got pw login disabled :(</p>
+
+<p>So i used this to enumerate open ports on machine&hellip;</p>
+
+<h2 id="fast-forward-another-few-hours">Fast forward another few hours</h2>
+
+<p>I found a Monit Admin interface I was able to interact with via dns rebinding ssrf
+It had an buffer overread vuln so I was able to read some memory (+1 point in impact :D)
+Aaand I could shut down the whole instance using shutdown function in Monit (+10 points)</p>
+
+<p>Then I reported this too!</p>
+
+<h1 id="i-got-a-response-in-a-fucking-month">I got a response in a fucking month&hellip;&hellip;&hellip;</h1>
+
+<p>The moment before the response arrived I was like</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://media1.tenor.com/images/e19bfdcad89ad9266a13aafa7d88f803/tenor.gif" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>They fixed it, gave me a bounty, everyone was happy, life went on :D
+<figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_1/totally_legit_bounty.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure>
+<!-- Inspect element does some real magix, for those curious it was actually below $1000 it's a small company--></p>
+
+<h1 id="lessons-learned">Lessons learned</h1>
+
+<ul>
+<li><p>Bugs exist everywhere</p></li>
+
+<li><p>I you are stuck, go back few steps and start again</p></li>
+
+<li><p>If you are stuck after doing the step above - message your mentor/more expirienced hacker they will always help you</p></li>
+
+<li><p>Be patient AF</p></li>
+
+<li><p>If you have free time, create some great tool! or contribute to other great tools</p></li>
+
+<li><p>BB is not entirely about money, It&rsquo;s more about the things you learn</p></li>
+</ul>
+
+<h1 id="now-it-s-time-for-some-self-advertisment">Now it&rsquo;s time for some self-advertisment</h1>
+
+<h2 id="are-you-tired-of-exploiting-dns-rebinding-without-gui">Are you tired of exploiting DNS Rebinding without gui?</h2>
+
+<p>This may sound Scriptkiddie-is but I actually wanted something with gui and logs</p>
+
+<h3 id="how-it-went-down">How it went down</h3>
+
+<p>I was on a vacation and I got sick probably from the food and I couldn&rsquo;t go out swimming. So I pulled out my laptop and started working on a Flask api connected to modified dns server via SQL and Redis&hellip; And I Can&rsquo;t forget the React frontend, It was the worst thing of it all. Sorry frontend fanboys, I just value my mental health.</p>
+
+<p>After 1.5 days Everything except from the React app of course was done, You can actually check the code out <a href="https://github.com/makuga01/dnsFookup" rel="nofollow noreferrer" target="_blank">Here</a> and the Live Version with dns server and everything is <a href="http://rbnd.gl0.eu/" rel="nofollow noreferrer" target="_blank">Here</a> - you can register, create rebind rules, use it to hack something, watch logs and stuff like that. Yes it&rsquo;s and http link I know that and I hate myself for that but I&rsquo;m too lazy to spend 2 minutes with certbot</p>
+
+<p>For those who didn&rsquo;t look thamselves what it does is</p>
+
+<ul>
+<li><p>I tell it to make a subdomain that will resolve to <code>1.2.3.4</code> 3 times and then to <code>127.0.0.1</code> 1 time</p></li>
+
+<li><p>It puts the data into db and gives me something like <code>y1982ehiuwqh82319j2139821.gel0.space</code></p></li>
+
+<li><p>when I make a query to this domain, dns server looks into db, loads the data into redis for quicker future access and then resolves it based on the rules given</p></li>
+</ul>
+
+<h4 id="if-you-have-a-bit-of-free-time-don-t-watch-netflix-hack-create-and-most-importantly-contribute-to-https-github-com-makuga01-dnsfookup-i-will-be-veryveryvery-happy-if-someone-adds-some-feature-to-it-or-adds-something-to-the-frontend-the-be-api-is-nice-and-working-but-the-frontend-is-a-problem-for-me">If you have a bit of free time, don&rsquo;t watch netflix - Hack, create and most importantly contribute to <a href="https://github.com/makuga01/dnsFookup" rel="nofollow noreferrer" target="_blank">https://github.com/makuga01/dnsFookup</a> 😇 I will be veryveryvery happy if someone adds some feature to it or adds something to the frontend, the BE api is nice and working but the frontend is a problem for me</h4>
+
+<p>Anyway thanks for reading! Hope you liked this writeup, If you have some questions/suggestions/you just wanna talk with some cringy script kiddie just DM me on twitter <a href="https://twitter.com/marek_geleta" rel="nofollow noreferrer" target="_blank">@marek_geleta</a> or anywhere else I will almost certainly respond to you in few minutes, I like talking to people 😄</p>
+
+<p>I&rsquo;m sorry for the amount of text/things learned I will get better I promise, I just like writing stories with incorrect grammar</p>
+
+<p>PS.</p>
+
+<p>sory for my Englandish, It not my primar languge</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Marek Geleta </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>Words:</span>
+                   <span>1493</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>Share:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fgeleta.eu%2f2019%2fmy-first-ssrf-using-dns-rebinfing%2f&amp;text=My%20First%20SSRF%20Using%20DNS%20Rebinding&amp;via=marek_geleta" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//reddit.com/submit?url=https%3a%2f%2fgeleta.eu%2f2019%2fmy-first-ssrf-using-dns-rebinfing%2f&amp;title=My%20First%20SSRF%20Using%20DNS%20Rebinding" target="_blank" title="Share on Reddit">
+          <i class="iconfont icon-reddit"></i>
+        </a>
+        
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+</span>
+                
+            </p>
+
+             
+            <p class="copyright-item">
+                Released under <a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>Tag: 
+            
+            <span class="tag"><a href="https://geleta.eu/tags/bugbounty/">
+                    #bugbounty</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/ssrf/">
+                    #ssrf</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/writeup/">
+                    #writeup</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/security/">
+                    #security</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/bug/">
+                    #bug</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/bounty/">
+                    #bounty</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/dns-rebinding/">
+                    #dns rebinding</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/dns/">
+                    #dns</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/rebinding/">
+                    #rebinding</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/attack/">
+                    #attack</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://geleta.eu">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      (function() {
+          
+          
+          if (window.location.hostname == "localhost")
+              return;
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          var disqus_shortname = 'geletodisguis';
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+ 
+
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2018 - 2019</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://geleta.eu">Marek Geleta</a></span>
+         
+
+		  
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <link crossorigin="anonymous" integrity="sha384-yziQACfvCVwLqVFLqkWBYRO3XeA4EqzfXKGwaWnenYn5XzqfJFlFdKEmvutIQdKb" href="https://lib.baomitu.com/lightgallery/1.6.12/css/lightgallery.min.css" rel="stylesheet">
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>
