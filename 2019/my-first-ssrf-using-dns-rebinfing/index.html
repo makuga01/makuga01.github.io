@@ -63,7 +63,7 @@ To make explaining this easier
   },
   "genre": "posts",
   "keywords": "bugbounty, ssrf, writeup, security, bug, bounty, dns rebinding, dns, rebinding, attack",
-  "wordcount":  1519 ,
+  "wordcount":  1545 ,
   "url": "https:\/\/geleta.eu\/2019\/my-first-ssrf-using-dns-rebinfing\/",
   "datePublished": "2019-11-11T00:00:00\x2b00:00",
   "dateModified": "2019-11-11T00:00:00\x2b00:00",
@@ -292,10 +292,10 @@ Now all left to do was enumerate and possibly get a RCE if I was lucky</p>
 
 <h3 id="aaaand-after-chaining-with-other-ssrf">AAAAND After chaining with other ssrf&hellip;</h3>
 
-<p>This was a bit easier - there was a ftp connection with ssrf in it - I put 127.0.0.1:22 into ip adress field and server responded with <code>bad response: SSH-2.0-OpenSSH_someversion :D</code>
-I tried to bruteforce ftp creds with top-1k passwords and uname of root but I guess they got pw login disabled :(</p>
+<p>This was a bit easier - there was a ftp connection vulnerable to ssrf - When some other service than ftp was passed in, let&rsquo;s say 127.0.0.1:22 server errored out with <code>Bad FTP RESPONSE: SSH-2.0-OpenSSH_someversion</code> So using this I was able to enumerate open internal ports on their server
+Another thing that was possible was bruteforcing ftp credentials on 127.0.0.1:21 since it was open too, I tried it with top-1k but it didn&rsquo;t work out :(</p>
 
-<p>So i used this to enumerate open ports on machine&hellip;</p>
+<p>So I just enumerated the ports&hellip;</p>
 
 <h2 id="fast-forward-another-few-hours">Fast forward another few hours</h2>
 
@@ -307,11 +307,11 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
 
 <h1 id="i-got-a-response-in-a-fucking-month">I got a response in a fucking month&hellip;&hellip;&hellip;</h1>
 
-<p>The moment before the response arrived I was like</p>
+<p>Meanwhile I turned into skeleton</p>
 
 <p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://media1.tenor.com/images/e19bfdcad89ad9266a13aafa7d88f803/tenor.gif" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
 
-<p>They fixed it, gave me a bounty, everyone was happy, life went on :D
+<p>But eventually they responded! They fixed it, gave me a not that big bounty (It&rsquo;s a small program), everyone was happy, life went on :D
 <figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_1/totally_legit_bounty.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure>
 <!-- Inspect element does some real magix, for those curious it was actually below $1000 it's a small company--></p>
 
@@ -335,7 +335,7 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
 
 <h2 id="are-you-tired-of-exploiting-dns-rebinding-without-gui">Are you tired of exploiting DNS Rebinding without gui?</h2>
 
-<p>This may sound Scriptkiddie-is but I actually wanted something with gui and logs</p>
+<p>This may sound Scriptkiddie-ish but I actually wanted something with gui and logs</p>
 
 <h3 id="how-it-went-down">How it went down</h3>
 
@@ -375,7 +375,7 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
            
             <p class="copyright-item">
                     <span>Words:</span>
-                   <span>1519</span>
+                   <span>1545</span>
             </p>
             
             <p class="copyright-item">
@@ -482,7 +482,7 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
           if (window.location.hostname == "localhost")
               return;
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          var disqus_shortname = 'geletodisguis';
+          var disqus_shortname = 'geleta-eu';
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
@@ -533,6 +533,17 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
 
 
 
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-152793686-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 
