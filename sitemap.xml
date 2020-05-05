@@ -2,9 +2,9 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
-      <loc>https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/</loc>
+      <loc>https://geleta.eu/2020/a-tale-of-verbose-error-message-and-jwt-token/</loc>
       
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>
@@ -16,7 +16,7 @@
     </url>
   
     <url>
-      <loc>https://geleta.eu/tags/attack/</loc>
+      <loc>https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/</loc>
       
       <lastmod>2019-11-11T00:00:00+00:00</lastmod>
       
@@ -32,7 +32,7 @@
     <url>
       <loc>https://geleta.eu/tags/bounty/</loc>
       
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>
@@ -46,7 +46,7 @@
     <url>
       <loc>https://geleta.eu/tags/bug/</loc>
       
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>
@@ -60,7 +60,7 @@
     <url>
       <loc>https://geleta.eu/categories/bug-bounty/</loc>
       
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>
@@ -74,7 +74,7 @@
     <url>
       <loc>https://geleta.eu/tags/bugbounty/</loc>
       
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>
@@ -88,7 +88,7 @@
     <url>
       <loc>https://geleta.eu/categories/</loc>
       
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>
@@ -100,9 +100,79 @@
     </url>
   
     <url>
-      <loc>https://geleta.eu/tags/dns/</loc>
+      <loc>https://geleta.eu/</loc>
       
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
+      
+      
+      <changefreq>monthly</changefreq>
+      
+      
+      <priority>0.5</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://geleta.eu/posts/</loc>
+      
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
+      
+      
+      <changefreq>monthly</changefreq>
+      
+      
+      <priority>0.5</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://geleta.eu/tags/security/</loc>
+      
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
+      
+      
+      <changefreq>monthly</changefreq>
+      
+      
+      <priority>0.5</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://geleta.eu/tags/ssrf/</loc>
+      
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
+      
+      
+      <changefreq>monthly</changefreq>
+      
+      
+      <priority>0.5</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://geleta.eu/tags/</loc>
+      
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
+      
+      
+      <changefreq>monthly</changefreq>
+      
+      
+      <priority>0.5</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://geleta.eu/tags/writeup/</loc>
+      
+      <lastmod>2020-05-05T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>
@@ -128,107 +198,9 @@
     </url>
   
     <url>
-      <loc>https://geleta.eu/</loc>
-      
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
-      
-      
-      <changefreq>monthly</changefreq>
-      
-      
-      <priority>0.5</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://geleta.eu/posts/</loc>
-      
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
-      
-      
-      <changefreq>monthly</changefreq>
-      
-      
-      <priority>0.5</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://geleta.eu/tags/rebinding/</loc>
-      
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
-      
-      
-      <changefreq>monthly</changefreq>
-      
-      
-      <priority>0.5</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://geleta.eu/tags/security/</loc>
-      
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
-      
-      
-      <changefreq>monthly</changefreq>
-      
-      
-      <priority>0.5</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://geleta.eu/tags/ssrf/</loc>
-      
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
-      
-      
-      <changefreq>monthly</changefreq>
-      
-      
-      <priority>0.5</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://geleta.eu/tags/</loc>
-      
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
-      
-      
-      <changefreq>monthly</changefreq>
-      
-      
-      <priority>0.5</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://geleta.eu/tags/writeup/</loc>
-      
-      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
-      
-      
-      <changefreq>monthly</changefreq>
-      
-      
-      <priority>0.5</priority>
-      
-      
-    </url>
-  
-    <url>
       <loc>https://geleta.eu/whoami/</loc>
       
-      <lastmod>2014-04-09T00:00:00+00:00</lastmod>
+      <lastmod>2019-11-11T00:00:00+00:00</lastmod>
       
       
       <changefreq>monthly</changefreq>

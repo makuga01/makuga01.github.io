@@ -7,14 +7,15 @@
   <meta name="robots" content="noodp"/>
   <meta name="twitter:card" content="Marek Geleta" />
   <meta name="twitter:description" content="My personal blog" />
-<meta name="twitter:image" content="https://geleta.eu/android-chrome-512x512.png" />
+    <meta name="og:image" content="https://geleta.eu/android-chrome-512x512.png" />
+  <meta name="twitter:image:src" content="https://geleta.eu/android-chrome-512x512.png" />
   
   
   
   
   
   
-  
+  <link rel="next" href="https://geleta.eu/2020/a-tale-of-verbose-error-message-and-jwt-token/" />
   <link rel="canonical" href="https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/" />
   <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -27,10 +28,10 @@
   <title>
        
        
-           My First SSRF Using DNS Rebinding | MAREK.GELETA
+           My First SSRF Using DNS Rebinding | marek.geleta
        
   </title>
-  <meta name="title" content="My First SSRF Using DNS Rebinding | MAREK.GELETA">
+  <meta name="title" content="My First SSRF Using DNS Rebinding | marek.geleta">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -39,7 +40,12 @@
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="My First SSRF Using DNS Rebinding"/>
-<meta name="twitter:description" content="Writeup of how I found ssrfs using not-so-common technique"/>
+<meta name="twitter:description" content="What is DNS Rebinding? Imagine you are a comuter :D People give you URLs and you load them
+Of course you won&rsquo;t load url that points to your internal network&hellip; That would be stupid right?
+Because of this some clever developer wrote code like this to prevent it from happening
+To make explaining this easier
+ ip_banlist is list of IPs you are blocking
+ domain is the URL you are trying to fetch"/>
 
   <script type="application/ld+json">
 {
@@ -57,7 +63,7 @@
     "height":  600 
   },
   "genre": "posts",
-  "keywords": "bugbounty, ssrf, writeup, security, bug, bounty, dns rebinding, dns, rebinding, attack",
+  "keywords": "bugbounty, ssrf, writeup, security, bug, bounty, dns rebinding",
   "wordcount":  1545 ,
   "url": "https:\/\/geleta.eu\/2019\/my-first-ssrf-using-dns-rebinfing\/",
   "datePublished": "2019-11-11T00:00:00\x2b00:00",
@@ -90,7 +96,7 @@
         <nav class="navbar">
     <div class="container">
         <div class="navbar-header header-logo">
-        	<a href="https://geleta.eu">MAREK.GELETA</a>
+        	<a href="https://geleta.eu">marek.geleta</a>
         </div>
         <div class="menu navbar-right">
                 
@@ -170,7 +176,7 @@
 
 <h1 id="what-is-dns-rebinding">What is DNS Rebinding?</h1>
 
-<p>Imagine you are a computer :D
+<p>Imagine you are a comuter :D
 People give you URLs and you load them</p>
 
 <p>Of course you won&rsquo;t load url that points to your internal network&hellip; That would be stupid right?</p>
@@ -445,15 +451,6 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
             <span class="tag"><a href="https://geleta.eu/tags/dns-rebinding/">
                     #dns rebinding</a></span>
             
-            <span class="tag"><a href="https://geleta.eu/tags/dns/">
-                    #dns</a></span>
-            
-            <span class="tag"><a href="https://geleta.eu/tags/rebinding/">
-                    #rebinding</a></span>
-            
-            <span class="tag"><a href="https://geleta.eu/tags/attack/">
-                    #attack</a></span>
-            
             </section>
         
         <section>
@@ -464,6 +461,8 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
 
     <div class="post-nav">
          
+        
+        <a href="https://geleta.eu/2020/a-tale-of-verbose-error-message-and-jwt-token/" class="next" rel="next" title="A tale of verbose error message and a JWT token">A tale of verbose error message and a JWT token&nbsp;<i class="iconfont icon-xiaojiantou"></i></a>
         
     </div>
 
@@ -497,7 +496,7 @@ Aaand I could shut down the whole instance using shutdown function in Monit (+10
     <div class="copyright">
         &copy;
         
-        <span itemprop="copyrightYear">2018 - 2019</span>
+        <span itemprop="copyrightYear">2019 - 2020</span>
         
          
             <span class="author" itemprop="copyrightHolder"><a href="https://geleta.eu">Marek Geleta</a></span>

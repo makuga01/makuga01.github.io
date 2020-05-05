@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="twitter:card" content="Marek Geleta" />
+  <meta name="twitter:description" content="My personal blog" />
+    <meta name="og:image" content="http://geleta.eu/post_2/task.png" />
+  <meta name="twitter:image:src" content="http://geleta.eu/post_2/task.png" />
+  
+  
+  
+  
+  
+  <link rel="prev" href="https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/" />
+  
+  <link rel="canonical" href="https://geleta.eu/2020/a-tale-of-verbose-error-message-and-jwt-token/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           A tale of verbose error message and a JWT token | marek.geleta
+       
+  </title>
+  <meta name="title" content="A tale of verbose error message and a JWT token | marek.geleta">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://geleta.eu/post_2/task.png"/>
+
+<meta name="twitter:title" content="A tale of verbose error message and a JWT token"/>
+<meta name="twitter:description" content="How an error message can give you access to the matrix"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "A tale of verbose error message and a JWT token",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/geleta.eu\/2020\/a-tale-of-verbose-error-message-and-jwt-token\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/geleta.eu\/me\/avatar.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "bugbounty, ssrf, writeup, security, bug, bounty",
+  "wordcount":  463 ,
+  "url": "https:\/\/geleta.eu\/2020\/a-tale-of-verbose-error-message-and-jwt-token\/",
+  "datePublished": "2020-05-05T00:00:00\x2b00:00",
+  "dateModified": "2020-05-05T00:00:00\x2b00:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Marek Geleta1",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/geleta.eu\/me\/avatar.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Marek Geleta"
+  },
+  "description": "How an error message can give you access to the matrix"
+}
+</script>
+</head>
+
+  
+
+
+  <body class="dark-theme" penis>
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://geleta.eu">marek.geleta</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/whoami" title="">whoami</a>
+                
+                <a class="menu-item" href="/posts/" title="">blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">categories</a>
+                
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/whoami" title="">whoami</a>
+                
+                <a class="menu-item" href="/posts/" title="">blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">categories</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">A tale of verbose error message and a JWT token</h1>
+        <div class="post-meta">
+            Written by <a href="https://geleta.eu" rel="author">Marek Geleta</a> with ♥ 
+                <span class="post-time">
+                    on <time datetime=2020-05-05 >5 May 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://geleta.eu/categories/bug-bounty/"> Bug Bounty </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                3 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>Unlike probably all web developers I love HTTP 500 errors - they often indicate that something went terribly wrong and there might be a vulnerability.
+In most cases, you are left with something like this</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_2/500.jpeg" alt="Cute but doesn't say much about the error :(" class="lazyload"><figcaption class="image-caption">Cute but doesn't say much about the error :(</figcaption></figure></p>
+
+<p>But in some, the errors are more verbose and sometimes disclose a little more information than they should about what&rsquo;s actually happening behind the scenes and what went wrong. And this was the case with this bug.</p>
+
+<h2 id="intro">Intro</h2>
+
+<p>I had burp running with <a href="https://github.com/Quitten/Autorize" rel="nofollow noreferrer" target="_blank">Autorize</a> extension - it automatically sends every request that went through proxy again with cookies of another user and without any cookies whatsoever.</p>
+
+<p>The app I was testing can be compared to something like GitHub - You can create public/private projects, collaborate, etc.</p>
+
+<h2 id="a-bit-of-information-gathering">A bit of information gathering</h2>
+
+<p>There was this feature to duplicate a project.
+It was a bit weird because it required a JWT token although the rest of the app used cookie-based auth. I tried to mess with it a bit but didn&rsquo;t find anything useful.
+Next, I played with a bunch of other endpoints and found another two that were using JWT auth - &ldquo;download project as zip&rdquo; and &ldquo;write files to project&rdquo;. (Didn&rsquo;t find any vulnerabilities in them, just noted that they were using JWT)</p>
+
+<h2 id="some-bugs-are-hidden-where-you-least-expect-them">Some bugs are hidden where you least expect them</h2>
+
+<p>Then I looked into Autorize, scrolled a bit, inspected responses, and then noticed that the unauthenticated request to &ldquo;duplicate project&rdquo; endpoint returned error 500 and <strong>much</strong> longer response than any other request. I don&rsquo;t have a screenshot of that but I think it was something about 8Kb</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_2/interesting.gif" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>So I did what any other person would do. Clicked on the response aaand there was a LOT of stuff</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/post_2/error.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>There were JWT tokens everywhere! After a while of base64-decoding and comparing stuff, I found out that this was basically a God token.
+If someone requested <code>/api/{project_id}/duplicate</code> without any authorization it would then create a new user and issue a token with write permission for the supplied project.</p>
+
+<p>This was the base64decoded token:</p>
+
+<pre><code>{
+  &quot;userId&quot;:&quot;9e46fac3-e0c6-4532-af6c-3fe78444cef2&quot;,
+  &quot;projectId&quot;:&quot;5e822a7b-9563-4ae4-9820-c39bad8b715d&quot;,
+  &quot;accessType&quot;:&quot;edit&quot;,
+  &quot;iat&quot;:158196154
+}
+</code></pre>
+
+<p>Then the app would for some reason error out and throw this token at me, I don&rsquo;t really know what went wrong because the token was working!</p>
+
+<h3 id="remember-those-two-jwt-endpoints-i-was-talking-about-earlier">Remember those two JWT endpoints I was talking about earlier?</h3>
+
+<p>So now with this token I was able to read or write every project and needed just its uuid to do it - that limits the impact a bit but I still had r/w access to practically every project on the app</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://media.giphy.com/media/MC6eSuC3yypCU/giphy.gif" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<h2 id="lessons-learned">Lessons learned</h2>
+
+<ul>
+<li>Note weird things, patterns of behavior of the app - it can be useful later</li>
+<li>Learn to use burp extensions</li>
+<li>Using UUIDs instead of numeric IDs can be a pretty good defense in depth against IDORS (Not perfect though)</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Marek Geleta </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>Words:</span>
+                   <span>463</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>Share:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fgeleta.eu%2f2020%2fa-tale-of-verbose-error-message-and-jwt-token%2f&amp;text=A%20tale%20of%20verbose%20error%20message%20and%20a%20JWT%20token&amp;via=marek_geleta" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//reddit.com/submit?url=https%3a%2f%2fgeleta.eu%2f2020%2fa-tale-of-verbose-error-message-and-jwt-token%2f&amp;title=A%20tale%20of%20verbose%20error%20message%20and%20a%20JWT%20token" target="_blank" title="Share on Reddit">
+          <i class="iconfont icon-reddit"></i>
+        </a>
+        
+      
+      
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+</span>
+                
+            </p>
+
+             
+            <p class="copyright-item">
+                Released under <a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>Tag: 
+            
+            <span class="tag"><a href="https://geleta.eu/tags/bugbounty/">
+                    #bugbounty</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/ssrf/">
+                    #ssrf</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/writeup/">
+                    #writeup</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/security/">
+                    #security</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/bug/">
+                    #bug</a></span>
+            
+            <span class="tag"><a href="https://geleta.eu/tags/bounty/">
+                    #bounty</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://geleta.eu">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://geleta.eu/2019/my-first-ssrf-using-dns-rebinfing/" class="prev" rel="prev" title="My First SSRF Using DNS Rebinding"><i class="iconfont icon-dajiantou"></i>&nbsp;My First SSRF Using DNS Rebinding</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      (function() {
+          
+          
+          if (window.location.hostname == "localhost")
+              return;
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          var disqus_shortname = 'geleta-eu';
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+ 
+
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2019 - 2020</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://geleta.eu">Marek Geleta</a></span>
+         
+
+		  
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <link crossorigin="anonymous" integrity="sha384-yziQACfvCVwLqVFLqkWBYRO3XeA4EqzfXKGwaWnenYn5XzqfJFlFdKEmvutIQdKb" href="https://lib.baomitu.com/lightgallery/1.6.12/css/lightgallery.min.css" rel="stylesheet">
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-152793686-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+     </div>
+  </body>
+</html>

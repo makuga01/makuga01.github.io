@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>security on MAREK.GELETA</title>
+    <title>security on marek.geleta</title>
     <link>https://geleta.eu/tags/security/</link>
-    <description>Recent content in security on MAREK.GELETA</description>
+    <description>Recent content in security on marek.geleta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://geleta.eu/tags/security/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A tale of verbose error message and a JWT token</title>
+      <link>https://geleta.eu/2020/a-tale-of-verbose-error-message-and-jwt-token/</link>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://geleta.eu/2020/a-tale-of-verbose-error-message-and-jwt-token/</guid>
+      <description>Unlike probably all web developers I love HTTP 500 errors - they often indicate that something went terribly wrong and there might be a vulnerability. In most cases, you are left with something like this
+But in some, the errors are more verbose and sometimes disclose a little more information than they should about what&amp;rsquo;s actually happening behind the scenes and what went wrong. And this was the case with this bug.</description>
+    </item>
     
     <item>
       <title>My First SSRF Using DNS Rebinding</title>

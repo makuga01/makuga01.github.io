@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on MAREK.GELETA</title>
+    <title>Tags on marek.geleta</title>
     <link>https://geleta.eu/tags/</link>
-    <description>Recent content in Tags on MAREK.GELETA</description>
+    <description>Recent content in Tags on marek.geleta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://geleta.eu/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>attack</title>
-      <link>https://geleta.eu/tags/attack/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://geleta.eu/tags/attack/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>bounty</title>
       <link>https://geleta.eu/tags/bounty/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://geleta.eu/tags/bounty/</guid>
       <description></description>
@@ -32,7 +23,7 @@
     <item>
       <title>bug</title>
       <link>https://geleta.eu/tags/bug/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://geleta.eu/tags/bug/</guid>
       <description></description>
@@ -41,18 +32,36 @@
     <item>
       <title>bugbounty</title>
       <link>https://geleta.eu/tags/bugbounty/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://geleta.eu/tags/bugbounty/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>dns</title>
-      <link>https://geleta.eu/tags/dns/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
+      <title>security</title>
+      <link>https://geleta.eu/tags/security/</link>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://geleta.eu/tags/dns/</guid>
+      <guid>https://geleta.eu/tags/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ssrf</title>
+      <link>https://geleta.eu/tags/ssrf/</link>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://geleta.eu/tags/ssrf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>writeup</title>
+      <link>https://geleta.eu/tags/writeup/</link>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://geleta.eu/tags/writeup/</guid>
       <description></description>
     </item>
     
@@ -62,42 +71,6 @@
       <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://geleta.eu/tags/dns-rebinding/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>rebinding</title>
-      <link>https://geleta.eu/tags/rebinding/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://geleta.eu/tags/rebinding/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>security</title>
-      <link>https://geleta.eu/tags/security/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://geleta.eu/tags/security/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ssrf</title>
-      <link>https://geleta.eu/tags/ssrf/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://geleta.eu/tags/ssrf/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>writeup</title>
-      <link>https://geleta.eu/tags/writeup/</link>
-      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://geleta.eu/tags/writeup/</guid>
       <description></description>
     </item>
     
